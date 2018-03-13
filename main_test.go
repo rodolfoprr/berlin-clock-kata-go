@@ -42,6 +42,18 @@ func TestSingleHoursRow(t *testing.T) {
 	Assert(t, testcases, ConvertSingleHours)
 }
 
+func TestFiveHoursRow(t *testing.T) {
+	testcases := []testcase{
+		{5, "ROOO"},
+		{10, "RROO"},
+		{15, "RRRO"},
+		{20, "RRRR"},
+		{0, "OOOO"},
+	}
+
+	Assert(t, testcases, ConvertFiveHours)
+}
+
 func Assert(t *testing.T, testcases []testcase, f func(int) string) {
 	for _, test := range testcases {
 		minutes := f(test.input)

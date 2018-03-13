@@ -17,19 +17,29 @@ func ConvertSeconds(seconds int) string {
 }
 
 func ConvertSingleMinutes(minutes int) string {
-	return GetOnOffLamps(yellowLamp, minutes)
+	return getOnOffLamps(yellowLamp, func() int {
+		return minutes % 5
+	})
 }
 
 func ConvertSingleHours(hours int) string {
-	return GetOnOffLamps(redLamp, hours)
+	return getOnOffLamps(redLamp, func() int {
+		return hours % 5
+	})
 }
 
-func GetOnOffLamps(lampColor string, time int) string {
+func ConvertFiveHours(hours int) string {
+	return getOnOffLamps(redLamp, func() int {
+		return hours / 5
+	})
+}
+
+func getOnOffLamps(lampColor string, getNumberOfOnLamps func() int) string {
 	var onLamps strings.Builder
 	var offLamps strings.Builder
 	totalLamps := 4
 
-	numberOfOnLamps := time % 5
+	numberOfOnLamps := getNumberOfOnLamps()
 
 	for i := 0; i < numberOfOnLamps; i++ {
 		onLamps.WriteString(lampColor)
