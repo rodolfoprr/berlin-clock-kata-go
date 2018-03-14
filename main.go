@@ -17,27 +17,48 @@ func ConvertSeconds(seconds int) string {
 }
 
 func ConvertSingleMinutes(minutes int) string {
-	return getOnOffLamps(yellowLamp, func() int {
+	getNumberOfOnLamps := func() int {
 		return minutes % 5
-	})
+	}
+
+	totalLamps := 4
+
+	return getLamps(yellowLamp, getNumberOfOnLamps, totalLamps)
 }
 
 func ConvertSingleHours(hours int) string {
-	return getOnOffLamps(redLamp, func() int {
+	getNumberOfOnLamps := func() int {
 		return hours % 5
-	})
+	}
+
+	totalLamps := 4
+
+	return getLamps(redLamp, getNumberOfOnLamps, totalLamps)
 }
 
 func ConvertFiveHours(hours int) string {
-	return getOnOffLamps(redLamp, func() int {
+	getNumberOfOnLamps := func() int {
 		return hours / 5
-	})
+	}
+
+	totalLamps := 4
+
+	return getLamps(redLamp, getNumberOfOnLamps, totalLamps)
 }
 
-func getOnOffLamps(lampColor string, getNumberOfOnLamps func() int) string {
+func ConvertFiveMinutes(minutes int) string {
+	getNumberOfOnLamps := func() int {
+		return minutes / 5
+	}
+
+	totalLamps := 11
+
+	return strings.Replace(getLamps(yellowLamp, getNumberOfOnLamps, totalLamps), "YYY", "YYR", -1)
+}
+
+func getLamps(lampColor string, getNumberOfOnLamps func() int, totalLamps int) string {
 	var onLamps strings.Builder
 	var offLamps strings.Builder
-	totalLamps := 4
 
 	numberOfOnLamps := getNumberOfOnLamps()
 

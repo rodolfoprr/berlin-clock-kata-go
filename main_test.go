@@ -54,12 +54,31 @@ func TestFiveHoursRow(t *testing.T) {
 	Assert(t, testcases, ConvertFiveHours)
 }
 
-func Assert(t *testing.T, testcases []testcase, f func(int) string) {
-	for _, test := range testcases {
-		minutes := f(test.input)
+func TestFiveMinutesRow(t *testing.T) {
+	testcases := []testcase{
+		{0, "OOOOOOOOOOO"},
+		{5, "YOOOOOOOOOO"},
+		{10, "YYOOOOOOOOO"},
+		{15, "YYROOOOOOOO"},
+		{20, "YYRYOOOOOOO"},
+		{25, "YYRYYOOOOOO"},
+		{30, "YYRYYROOOOO"},
+		{35, "YYRYYRYOOOO"},
+		{40, "YYRYYRYYOOO"},
+		{45, "YYRYYRYYROO"},
+		{50, "YYRYYRYYRYO"},
+		{55, "YYRYYRYYRYY"},
+	}
 
-		if minutes != test.expected {
-			t.Errorf("Color was incorrect, %d got: %s, want: %s.", test.input, minutes, test.expected)
+	Assert(t, testcases, ConvertFiveMinutes)
+}
+
+func Assert(t *testing.T, testcases []testcase, convert func(int) string) {
+	for _, test := range testcases {
+		convertedTime := convert(test.input)
+
+		if convertedTime != test.expected {
+			t.Errorf("Color was incorrect, %d got: %s, want: %s.", test.input, convertedTime, test.expected)
 		}
 	}
 }
